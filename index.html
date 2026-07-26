@@ -5,240 +5,547 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🇵🇪 Perú Simulator: Naciste, Ahora Sobrevive</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👶</text></svg>">
-    <!-- Google Fonts -->
-    <script>
-        window.onerror = function(message, source, lineno, colno, error) {
-            alert("JS Error: " + message + "\nSource: " + source + "\nLine: " + lineno + ":" + colno);
-            return false;
-        };
-    </script>
+    <!-- Google Fonts para Neo-Brutalismo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-wrapper">
         <!-- PANTALLA 1: MENÚ PRINCIPAL -->
         <section id="screen-main-menu" class="game-screen active">
-            <div class="menu-header">
-                <div class="peru-flag"></div>
-                <h1>PERÚ SIMULATOR</h1>
-                <p class="subtitle">"Naciste. Ahora sobrevive."</p>
-            </div>
-            
-            <div class="menu-options">
-                <button id="btn-new-game" class="btn btn-primary btn-pulse">▶ Nueva Vida</button>
-                <button id="btn-load-game" class="btn btn-secondary" disabled>Cargar Partida</button>
-                <button id="btn-open-achievements" class="btn btn-secondary">🏆 Logros <span id="unlocked-count-badge">(0)</span></button>
-                <button id="btn-open-stats-history" class="btn btn-secondary">📊 Récords & Historial</button>
-            </div>
-
-            <div class="chaos-toggle-container">
-                <label class="switch-container">
-                    <input type="checkbox" id="toggle-chaos-mode">
-                    <span class="switch-slider"></span>
-                </label>
-                <div class="chaos-label-group">
-                    <span class="chaos-title">🔥 Modo Caótico</span>
-                    <span class="chaos-desc">Eventos más absurdos, memes y mala suerte garantizada.</span>
+            <div class="menu-card neo-card">
+                <div class="menu-header">
+                    <div class="peru-flag-badge">🇵🇪 PERÚ</div>
+                    <h1 class="main-title">PERÚ SIMULATOR</h1>
+                    <p class="subtitle">"Naciste en tierra inca. Ahora sobrevive."</p>
                 </div>
-            </div>
+                
+                <div class="menu-options">
+                    <button id="btn-new-game" class="btn btn-primary btn-large">▶ NUEVA VIDA</button>
+                    <button id="btn-load-game" class="btn btn-secondary btn-large" disabled>💾 CARGAR PARTIDA</button>
+                    <button id="btn-open-achievements" class="btn btn-accent btn-large">🏆 LOGROS <span id="unlocked-count-badge" class="badge-pill">(0)</span></button>
+                    <button id="btn-open-stats-history" class="btn btn-neutral btn-large">📊 RÉCORDS & HISTORIAL</button>
+                </div>
 
-            <div class="menu-footer">
-                <p>Versión 1.2.0 • Hecho con ☕ y 🍗 a la brasa</p>
+                <div class="chaos-toggle-box neo-box">
+                    <label class="switch-container">
+                        <input type="checkbox" id="toggle-chaos-mode">
+                        <span class="switch-slider"></span>
+                    </label>
+                    <div class="chaos-label-group">
+                        <span class="chaos-title">🔥 MODO CAÓTICO</span>
+                        <span class="chaos-desc">Eventos más absurdos, memes, combis voladoras y mala suerte garantizada.</span>
+                    </div>
+                </div>
+
+                <div class="menu-footer">
+                    <p>Versión 2.0 Neo-Brutal • Hecho con ☕, 🍗 a la brasa e Inca Kola</p>
+                </div>
             </div>
         </section>
 
         <!-- PANTALLA 2: CREACIÓN DE PERSONAJE -->
         <section id="screen-character-creator" class="game-screen">
-            <div class="screen-title">
-                <h2>Crea tu Personaje</h2>
-                <p>Tu origen definirá tu destino y tus estadísticas iniciales.</p>
+            <div class="creator-card neo-card">
+                <div class="screen-title">
+                    <h2>👶 CREA TU PERSONAJE</h2>
+                    <p>Tu origen definirá tu destino y tus estadísticas iniciales en el Perú.</p>
+                </div>
+
+                <form id="creator-form" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <label for="char-name" class="neo-label">NOMBRE COMPLETO:</label>
+                        <div class="input-with-button">
+                            <input type="text" id="char-name" class="neo-input" placeholder="Ej. Brayan Quispe" maxlength="25" required>
+                            <button type="button" id="btn-random-name" class="btn btn-secondary">🎲 AZAR</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="neo-label">IDENTIDAD DE GÉNERO:</label>
+                        <div class="radio-group-neo">
+                            <label class="radio-card-neo">
+                                <input type="radio" name="char-gender" value="m" checked>
+                                <span class="radio-box">
+                                    <span class="emoji">👨</span>
+                                    <span class="label">Masculino</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo">
+                                <input type="radio" name="char-gender" value="f">
+                                <span class="radio-box">
+                                    <span class="emoji">👩</span>
+                                    <span class="label">Femenino</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo">
+                                <input type="radio" name="char-gender" value="nb">
+                                <span class="radio-box">
+                                    <span class="emoji">🚐</span>
+                                    <span class="label">Combi Voladora</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="neo-label">LUGAR DE NACIMIENTO:</label>
+                        <div class="radio-grid-4-neo">
+                            <label class="radio-card-neo mini">
+                                <input type="radio" name="char-birthplace" value="lima" checked>
+                                <span class="radio-box">
+                                    <span class="emoji">🏙️</span>
+                                    <span class="label-title">Lima</span>
+                                    <span class="label-desc">S/. +1000, Estrés +10%</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo mini">
+                                <input type="radio" name="char-birthplace" value="costa">
+                                <span class="radio-box">
+                                    <span class="emoji">🌊</span>
+                                    <span class="label-title">Costa</span>
+                                    <span class="label-desc">Felicidad +10, Salud +5</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo mini">
+                                <input type="radio" name="char-birthplace" value="sierra">
+                                <span class="radio-box">
+                                    <span class="emoji">🏔️</span>
+                                    <span class="label-title">Sierra</span>
+                                    <span class="label-desc">Salud +15, Educación +5</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo mini">
+                                <input type="radio" name="char-birthplace" value="selva">
+                                <span class="radio-box">
+                                    <span class="emoji">🌴</span>
+                                    <span class="label-title">Selva</span>
+                                    <span class="label-desc">Felicidad +15, Suerte +10</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="neo-label">SITUACIÓN ECONÓMICA FAMILIAR:</label>
+                        <div class="radio-group-neo">
+                            <label class="radio-card-neo">
+                                <input type="radio" name="char-class" value="pobre" checked>
+                                <span class="radio-box">
+                                    <span class="emoji">🪵</span>
+                                    <span class="label-title">Humilde</span>
+                                    <span class="label-desc">Suerte +15, Contactos 0</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo">
+                                <input type="radio" name="char-class" value="media">
+                                <span class="radio-box">
+                                    <span class="emoji">🏢</span>
+                                    <span class="label-title">Clase Media</span>
+                                    <span class="label-desc">S/. +200, Equilibrado</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo">
+                                <input type="radio" name="char-class" value="rico">
+                                <span class="radio-box">
+                                    <span class="emoji">💳</span>
+                                    <span class="label-title">Acomodada</span>
+                                    <span class="label-desc">S/. +5000, Contactos +30</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="neo-label">DINÁMICA FAMILIAR:</label>
+                        <div class="radio-grid-4-neo">
+                            <label class="radio-card-neo mini">
+                                <input type="radio" name="char-family" value="estricta" checked>
+                                <span class="radio-box">
+                                    <span class="label-title">Estricta</span>
+                                    <span class="label-desc">Educación +10</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo mini">
+                                <input type="radio" name="char-family" value="normal">
+                                <span class="radio-box">
+                                    <span class="label-title">Normal</span>
+                                    <span class="label-desc">Equilibrada</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo mini">
+                                <input type="radio" name="char-family" value="relajada">
+                                <span class="radio-box">
+                                    <span class="label-title">Relajada</span>
+                                    <span class="label-desc">Felicidad +10</span>
+                                </span>
+                            </label>
+                            <label class="radio-card-neo mini">
+                                <input type="radio" name="char-family" value="caotica">
+                                <span class="radio-box">
+                                    <span class="label-title">Caótica</span>
+                                    <span class="label-desc">Estrés +10, Suerte +5</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="creator-actions">
+                        <button type="button" id="btn-creator-back" class="btn btn-neutral btn-large">⬅ ATRÁS</button>
+                        <button type="button" id="btn-start-life" class="btn btn-primary btn-large">¡NACER EN PERÚ! 👶</button>
+                    </div>
+                </form>
             </div>
-
-            <form id="creator-form" onsubmit="event.preventDefault();">
-                <div class="form-group">
-                    <label for="char-name">Nombre Completo:</label>
-                    <div class="input-with-button">
-                        <input type="text" id="char-name" placeholder="Ej. Brayan Quispe" maxlength="25" required>
-                        <button type="button" id="btn-random-name" class="btn btn-small">🎲 Azar</button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Identidad de Género:</label>
-                    <div class="radio-group">
-                        <label class="radio-card">
-                            <input type="radio" name="char-gender" value="m" checked>
-                            <span class="radio-content">
-                                <span class="emoji">👨</span>
-                                <span class="label">Masculino</span>
-                            </span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="char-gender" value="f">
-                            <span class="radio-content">
-                                <span class="emoji">👩</span>
-                                <span class="label">Femenino</span>
-                            </span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="char-gender" value="nb">
-                            <span class="radio-content">
-                                <span class="emoji">🛸</span>
-                                <span class="label">Combi Voladora</span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Lugar de Nacimiento:</label>
-                    <div class="radio-grid-4">
-                        <label class="radio-card mini">
-                            <input type="radio" name="char-birthplace" value="lima" checked>
-                            <span class="radio-content">
-                                <span class="emoji">🏙️</span>
-                                <span class="label-title">Lima</span>
-                                <span class="label-desc">S/. +1000, Estrés +10%</span>
-                            </span>
-                        </label>
-                        <label class="radio-card mini">
-                            <input type="radio" name="char-birthplace" value="costa">
-                            <span class="radio-content">
-                                <span class="emoji">🌊</span>
-                                <span class="label-title">Costa</span>
-                                <span class="label-desc">Felicidad +10, Salud +5</span>
-                            </span>
-                        </label>
-                        <label class="radio-card mini">
-                            <input type="radio" name="char-birthplace" value="sierra">
-                            <span class="radio-content">
-                                <span class="emoji">🏔️</span>
-                                <span class="label-title">Sierra</span>
-                                <span class="label-desc">Salud +15, Educación +5</span>
-                            </span>
-                        </label>
-                        <label class="radio-card mini">
-                            <input type="radio" name="char-birthplace" value="selva">
-                            <span class="radio-content">
-                                <span class="emoji">🌴</span>
-                                <span class="label-title">Selva</span>
-                                <span class="label-desc">Felicidad +15, Suerte +10</span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Situación Económica Familiar:</label>
-                    <div class="radio-group">
-                        <label class="radio-card">
-                            <input type="radio" name="char-class" value="pobre" checked>
-                            <span class="radio-content">
-                                <span class="emoji">🪵</span>
-                                <span class="label-title">Humilde</span>
-                                <span class="label-desc">Suerte +15, Contactos 0</span>
-                            </span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="char-class" value="media">
-                            <span class="radio-content">
-                                <span class="emoji">🏢</span>
-                                <span class="label-title">Clase Media</span>
-                                <span class="label-desc">S/. +200, Todo equilibrado</span>
-                            </span>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="char-class" value="rico">
-                            <span class="radio-content">
-                                <span class="emoji">💳</span>
-                                <span class="label-title">Acomodada</span>
-                                <span class="label-desc">S/. +5000, Contactos +30</span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Dinámica Familiar:</label>
-                    <div class="radio-grid-4">
-                        <label class="radio-card mini">
-                            <input type="radio" name="char-family" value="estricta" checked>
-                            <span class="radio-content">
-                                <span class="label-title">Estricta</span>
-                                <span class="label-desc">Educación +10</span>
-                            </span>
-                        </label>
-                        <label class="radio-card mini">
-                            <input type="radio" name="char-family" value="normal">
-                            <span class="radio-content">
-                                <span class="label-title">Normal</span>
-                                <span class="label-desc">Equilibrada</span>
-                            </span>
-                        </label>
-                        <label class="radio-card mini">
-                            <input type="radio" name="char-family" value="relajada">
-                            <span class="radio-content">
-                                <span class="label-title">Relajada</span>
-                                <span class="label-desc">Felicidad +10</span>
-                            </span>
-                        </label>
-                        <label class="radio-card mini">
-                            <input type="radio" name="char-family" value="caotica">
-                            <span class="radio-content">
-                                <span class="label-title">Caótica</span>
-                                <span class="label-desc">Estrés +10, Suerte +5</span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="creator-actions">
-                    <button type="button" id="btn-creator-back" class="btn btn-secondary">Atrás</button>
-                    <button type="button" id="btn-start-life" class="btn btn-primary">¡Nacer! 👶</button>
-                </div>
-            </form>
         </section>
 
+        <!-- PANTALLA 3: TABLERO DE JUEGO (GAMEPLAY) -->
+        <section id="screen-gameplay" class="game-screen">
+            <div class="gameplay-container">
+                <!-- Header de Estado Físico/Identidad -->
+                <header class="gameplay-header neo-card">
+                    <div class="character-summary">
+                        <div class="char-avatar" id="gameplay-avatar">👶</div>
+                        <div class="char-details">
+                            <h3 id="gameplay-name">Cargando...</h3>
+                            <div class="char-sub-details">
+                                <span id="gameplay-gender" class="tag-neo">Hombre</span>
+                                <span id="gameplay-birthplace" class="tag-neo">Lima</span>
+                                <span id="gameplay-class" class="tag-neo class-media">Clase Media</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-meta">
+                        <div class="meta-badge age-badge">EDAD: <strong id="gameplay-age">0</strong> AÑOS</div>
+                        <div class="meta-badge status-badge" id="gameplay-stage">Bebé</div>
+                        <div class="meta-badge karma-badge" id="gameplay-karma">😇 Bueno</div>
+                        <div id="gameplay-chaos-badge" class="meta-badge chaos-badge hide">🔥 CAOS</div>
+                    </div>
+                </header>
 
+                <!-- Barra de Progreso de la Vida -->
+                <div class="life-progress-bar-container neo-box">
+                    <div class="life-progress-label">PROGRESO DE VIDA (0 - 95 AÑOS)</div>
+                    <div class="life-progress-track">
+                        <div class="life-progress-fill" id="gameplay-life-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Panel de Estadísticas en Cuadrícula -->
+                <section class="stats-grid">
+                    <div class="stat-card neo-card" data-stat="money">
+                        <div class="stat-header">
+                            <span class="stat-emoji">💰</span>
+                            <span class="stat-title">DINERO</span>
+                        </div>
+                        <div class="stat-value" id="stat-money">S/. 0</div>
+                    </div>
+                    <div class="stat-card neo-card" data-stat="health">
+                        <div class="stat-header">
+                            <span class="stat-emoji">❤️</span>
+                            <span class="stat-title">SALUD</span>
+                            <span class="stat-percentage" id="stat-health-percent">100%</span>
+                        </div>
+                        <div class="stat-bar"><div class="stat-bar-fill val-good" id="stat-health-bar" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="stat-card neo-card" data-stat="happiness">
+                        <div class="stat-header">
+                            <span class="stat-emoji">😊</span>
+                            <span class="stat-title">FELICIDAD</span>
+                            <span class="stat-percentage" id="stat-happiness-percent">100%</span>
+                        </div>
+                        <div class="stat-bar"><div class="stat-bar-fill val-good" id="stat-happiness-bar" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="stat-card neo-card" data-stat="stress">
+                        <div class="stat-header">
+                            <span class="stat-emoji">😰</span>
+                            <span class="stat-title">ESTRÉS</span>
+                            <span class="stat-percentage" id="stat-stress-percent">0%</span>
+                        </div>
+                        <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-stress-bar" style="width: 0%;"></div></div>
+                    </div>
+                    <div class="stat-card neo-card" data-stat="education">
+                        <div class="stat-header">
+                            <span class="stat-emoji">📚</span>
+                            <span class="stat-title">EDUCACIÓN</span>
+                            <span class="stat-percentage" id="stat-education-percent">0%</span>
+                        </div>
+                        <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-education-bar" style="width: 0%;"></div></div>
+                    </div>
+                    <div class="stat-card neo-card" data-stat="contacts">
+                        <div class="stat-header">
+                            <span class="stat-emoji">🤝</span>
+                            <span class="stat-title">CONTACTOS</span>
+                            <span class="stat-percentage" id="stat-contacts-percent">0%</span>
+                        </div>
+                        <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-contacts-bar" style="width: 0%;"></div></div>
+                    </div>
+                </section>
+
+                <!-- Panel de Estado Adicional (Empleo, Pareja, Mascota, Activos) -->
+                <section class="status-summary-panel">
+                    <div class="summary-chip neo-chip" id="summary-job">💼 Ninguno</div>
+                    <div class="summary-chip neo-chip" id="summary-partner">❤️ Soltero</div>
+                    <div class="summary-chip neo-chip" id="summary-assets">🏠 Sin bienes</div>
+                    <div class="summary-chip neo-chip" id="summary-pets">🐕 Sin mascotas</div>
+                </section>
+
+                <!-- Panel de Evento Principal -->
+                <main class="event-panel neo-card" id="event-panel">
+                    <div class="event-image-container">
+                        <span id="event-large-emoji" class="large-emoji">👶</span>
+                    </div>
+                    <div class="event-content">
+                        <h2 class="event-title" id="event-title">¡Has nacido!</h2>
+                        <p class="event-description" id="event-description">Estás en los brazos de tu madre en un hospital. El médico te da una nalgada y empiezas a llorar en territorio peruano. ¡Buena suerte!</p>
+                    </div>
+                    <div class="event-options" id="event-options">
+                        <button class="btn btn-option">Continuar</button>
+                    </div>
+                </main>
+
+                <!-- Consola de Registro Histórico (Log) -->
+                <section class="console-log-container neo-card">
+                    <h4 class="console-title">📜 BITÁCORA DE VIDA PERUANA</h4>
+                    <div class="console-log" id="console-log">
+                        <div class="log-entry">👶 Naciste en el Perú. ¡El juego de la supervivencia comienza!</div>
+                    </div>
+                </section>
+
+                <!-- Tab Footer de Navegación de Acciones -->
+                <footer class="gameplay-footer-actions neo-card">
+                    <button id="btn-action-next-year" class="btn btn-primary btn-action-main">
+                        <span class="icon">⏳</span>
+                        <span class="label">SIGUIENTE AÑO</span>
+                    </button>
+                    <button id="btn-tab-activities" class="btn btn-secondary btn-action-sub">
+                        <span class="icon">💼</span>
+                        <span class="label">ACTIVIDADES</span>
+                    </button>
+                    <button id="btn-tab-relationships" class="btn btn-secondary btn-action-sub">
+                        <span class="icon">👥</span>
+                        <span class="label">RELACIONES</span>
+                    </button>
+                    <button id="btn-tab-minigames" class="btn btn-accent btn-action-sub">
+                        <span class="icon">🎮</span>
+                        <span class="label">MINIJUEGOS</span>
+                    </button>
+                    <button id="btn-action-save" class="btn btn-neutral btn-action-sub">
+                        <span class="icon">💾</span>
+                        <span class="label">GUARDAR</span>
+                    </button>
+                    <button id="btn-action-quit" class="btn btn-danger btn-action-sub">
+                        <span class="icon">🚪</span>
+                        <span class="label">SALIR</span>
+                    </button>
+                </footer>
+            </div>
+        </section>
+
+        <!-- PANTALLA 4: PANTALLA DE FINAL (DNI / CERTIFICADO) -->
+        <section id="screen-ending" class="game-screen">
+            <div class="ending-card neo-card">
+                <div class="ending-header">
+                    <span class="ending-icon" id="ending-emoji">🏆</span>
+                    <h2 id="ending-rank">FINAL: LEYENDA PERUANA</h2>
+                    <p class="subtitle">Tu vida en el Perú ha llegado a su fin.</p>
+                </div>
+
+                <div class="ending-body neo-box">
+                    <div class="ending-desc" id="ending-description">
+                        Viviste una vida espectacular, acumulaste millones, sobreviviste a la SUNAT, comiste cebiche todos los fines de semana y compraste 3 terrenos en Carabayllo.
+                    </div>
+                    <div class="ending-stats-grid">
+                        <div class="end-stat-item">
+                            <span class="lbl">Edad alcanzada:</span>
+                            <strong id="ending-age-reached">94 años</strong>
+                        </div>
+                        <div class="end-stat-item">
+                            <span class="lbl">Fortuna final:</span>
+                            <strong id="ending-fortune">S/. 18,400,000</strong>
+                        </div>
+                        <div class="end-stat-item">
+                            <span class="lbl">Estado de Relaciones:</span>
+                            <strong id="ending-relations">Casado, 3 hijos</strong>
+                        </div>
+                        <div class="end-stat-item">
+                            <span class="lbl">Último Trabajo:</span>
+                            <strong id="ending-job">Gerente General</strong>
+                        </div>
+                        <div class="end-stat-item">
+                            <span class="lbl">Karma final:</span>
+                            <strong id="ending-karma-type">Santo / Caótico</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canvas para Exportar Imagen DNI -->
+                <div class="canvas-container neo-box">
+                    <canvas id="dni-canvas" width="600" height="360"></canvas>
+                    <p class="canvas-tip">📸 Documento Nacional de Identidad generado para la eternidad.</p>
+                </div>
+
+                <div class="ending-actions">
+                    <button id="btn-download-dni" class="btn btn-primary btn-large">💾 DESCARGAR DNI VIRTUAL</button>
+                    <button id="btn-share-text" class="btn btn-accent btn-large">🔗 COPIAR RESUMEN</button>
+                    <button id="btn-ending-menu" class="btn btn-neutral btn-large">🏠 MENÚ PRINCIPAL</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL 3: ACTIVIDADES Y COMPRAS -->
+    <div id="modal-activities" class="modal-overlay">
+        <div class="modal-content medium neo-modal">
+            <header class="modal-header">
+                <h3>💼 ACTIVIDADES Y ADQUISICIONES</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="modal-tabs neo-tabs">
+                <button class="tab-btn active" data-tab="tab-content-activities">Acciones & Estilo de Vida</button>
+                <button class="tab-btn" data-tab="tab-content-purchases">Tienda (Compras/Bienes)</button>
+            </div>
+            <div class="modal-body">
+                <div id="tab-content-activities" class="tab-panel active">
+                    <div class="activities-list" id="activities-list"></div>
+                </div>
+                <div id="tab-content-purchases" class="tab-panel">
+                    <div class="purchases-list" id="purchases-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: RELACIONES -->
+    <div id="modal-relationships" class="modal-overlay">
+        <div class="modal-content medium neo-modal">
+            <header class="modal-header">
+                <h3>👥 RELACIONES SOCIALES</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="modal-body">
+                <div class="relationships-list" id="relationships-list"></div>
+                <div class="social-actions">
+                    <button id="btn-find-partner" class="btn btn-primary btn-full">💖 BUSCAR PAREJA</button>
+                    <button id="btn-adopt-pet" class="btn btn-accent btn-full">🐕 ADOPTAR MASCOTA (FIRULAIS)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: MINIJUEGOS -->
+    <div id="modal-minigames" class="modal-overlay">
+        <div class="modal-content medium neo-modal">
+            <header class="modal-header">
+                <h3>🎮 MINIJUEGOS CRIOLLOS</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="minigames-selector" id="minigames-selector-view">
+                <p class="selector-intro">Elige un minijuego para ganar dinero, felicidad, o arriesgarlo todo:</p>
+                <div class="minigame-card-btn neo-box" id="btn-select-penalties">
+                    <span class="card-emoji">⚽</span>
+                    <div class="card-info">
+                        <h4>El Penalty contra el Arquero Nacional</h4>
+                        <p>Patea un penal. Si anotas, ganas S/. 500 y felicidad. Si fallas, sube el estrés.</p>
+                    </div>
+                </div>
+                <div class="minigame-card-btn neo-box" id="btn-select-memory">
+                    <span class="card-emoji">🚌</span>
+                    <div class="card-info">
+                        <h4>Memoria del Metropolitano</h4>
+                        <p>Encuentra los pares de pasajeros antes de que la combi choque. Gana educación.</p>
+                    </div>
+                </div>
+                <div class="minigame-card-btn neo-box" id="btn-select-roulette">
+                    <span class="card-emoji">🎰</span>
+                    <div class="card-info">
+                        <h4>Ruleta de la Suerte del Jirón de la Unión</h4>
+                        <p>Apuesta S/. 100. Multiplica tu inversión por 5 o piérdelo todo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área de juego del minijuego activo -->
+            <div class="minigame-play-area hide" id="minigame-play-area">
+                <button id="btn-back-to-selector" class="btn btn-secondary btn-small">⬅ VOLVER A MINIJUEGOS</button>
+                
+                <!-- Minijuego 1: Penales -->
+                <div id="minigame-penalties" class="minigame-sub-panel hide">
+                    <h4>⚽ ¡Toma el Penal decisivo!</h4>
+                    <p class="minigame-instructions">Elige dónde disparar el balón. El arquero intentará tapar tu tiro.</p>
+                    <div class="penalty-field neo-box">
+                        <div class="goal-post">
+                            <button class="goal-target" data-dir="izq-sup">Arriba Izquierda</button>
+                            <button class="goal-target" data-dir="centro-sup">Arriba Centro</button>
+                            <button class="goal-target" data-dir="der-sup">Arriba Derecha</button>
+                            <button class="goal-target" data-dir="izq-inf">Abajo Izquierda</button>
+                            <button class="goal-target" data-dir="centro-inf">Abajo Centro</button>
+                            <button class="goal-target" data-dir="der-inf">Abajo Derecha</button>
+                        </div>
+                        <div class="penalty-ball-pos">⚽</div>
+                    </div>
+                    <div class="minigame-result-msg neo-box" id="penalty-result"></div>
+                </div>
+
+                <!-- Minijuego 2: Memoria -->
+                <div id="minigame-memory" class="minigame-sub-panel hide">
+                    <h4>🚌 Memoria del Metropolitano</h4>
+                    <p class="minigame-instructions">Encuentra los pares de emojis. Tiempo restante: <strong id="memory-timer">20s</strong></p>
+                    <div class="memory-grid" id="memory-grid"></div>
+                    <div class="minigame-result-msg neo-box" id="memory-result"></div>
+                </div>
+
+                <!-- Minijuego 3: Ruleta -->
+                <div id="minigame-roulette" class="minigame-sub-panel hide">
+                    <h4>🎰 Ruleta de la Suerte</h4>
+                    <p class="minigame-instructions">Apuesta S/. 100 eligiendo una opción:</p>
+                    <div class="roulette-bet-options">
+                        <button class="btn btn-secondary roulette-bet-btn" data-bet="red">🔴 Rojo (Doble o nada)</button>
+                        <button class="btn btn-secondary roulette-bet-btn" data-bet="black">⚫ Negro (Doble o nada)</button>
+                        <button class="btn btn-accent roulette-bet-btn" data-bet="gold">🟡 Dorado (Multiplica x5)</button>
+                    </div>
+                    <div class="roulette-wheel-container neo-box">
+                        <div class="roulette-wheel" id="roulette-wheel-visual">🎡</div>
+                    </div>
+                    <div class="minigame-result-msg neo-box" id="roulette-result"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- MODAL 1: LOGROS -->
     <div id="modal-achievements" class="modal-overlay">
-        <div class="modal-content large">
+        <div class="modal-content large neo-modal">
             <header class="modal-header">
-                <h3>🏆 Logros Desbloqueados</h3>
+                <h3>🏆 LOGROS DESBLOQUEADOS</h3>
                 <button class="modal-close">&times;</button>
             </header>
             <div class="modal-body">
                 <p class="modal-intro">Descubre los logros completados en tu historial de juego. Hay <strong id="total-achievements-count">40</strong> logros en total.</p>
-                <div class="achievements-grid" id="achievements-grid">
-                    <!-- Se rellena con JS -->
-                </div>
+                <div class="achievements-grid" id="achievements-grid"></div>
             </div>
         </div>
     </div>
 
     <!-- MODAL 2: HISTORIAL Y RÉCORDS -->
     <div id="modal-stats-history" class="modal-overlay">
-        <div class="modal-content">
+        <div class="modal-content medium neo-modal">
             <header class="modal-header">
-                <h3>📊 Récords & Historial de Vidas</h3>
+                <h3>📊 RÉCORDS & HISTORIAL DE VIDAS</h3>
                 <button class="modal-close">&times;</button>
             </header>
             <div class="modal-body">
                 <div class="records-summary">
-                    <div class="record-box">
+                    <div class="record-box neo-box">
                         <span class="record-num" id="record-total-lives">0</span>
                         <span class="record-label">Vidas Jugadas</span>
                     </div>
-                    <div class="record-box">
+                    <div class="record-box neo-box">
                         <span class="record-num" id="record-max-age">0</span>
                         <span class="record-label">Mayor Edad</span>
                     </div>
-                    <div class="record-box">
+                    <div class="record-box neo-box">
                         <span class="record-num" id="record-max-money">S/. 0</span>
                         <span class="record-label">Máxima Fortuna</span>
                     </div>
@@ -253,8 +560,6 @@
             </div>
         </div>
     </div>
-
-
 
     <!-- SCRIPTS DEL JUEGO -->
     <script src="events.js"></script>

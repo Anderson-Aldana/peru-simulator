@@ -78,29 +78,26 @@ class PeruSimulator {
         this.updateMainMenuUI();
         this.playBeep("success"); // Sonido inicial de carga
         
-        // Si estamos en juego.html:
-        if (document.getElementById("screen-gameplay")) {
-            const justBorn = localStorage.getItem("peru_simulator_just_born");
-            if (justBorn === "true") {
-                localStorage.removeItem("peru_simulator_just_born");
-                const savedGame = localStorage.getItem("peru_simulator_current_run");
-                const savedChaos = localStorage.getItem("peru_simulator_chaos_mode");
-                if (savedGame) {
-                    this.player = JSON.parse(savedGame);
-                    this.injectPlayerMethods();
-                    this.chaosMode = savedChaos ? JSON.parse(savedChaos) : false;
-                }
-                
-                const logContainer = document.getElementById("console-log");
-                if (logContainer) logContainer.innerHTML = "";
-                this.pushLog(`👶 Naces en ${this.getBirthplaceLabel(this.player.birthplace)}. ¡Que empiece la vida!`);
-                
-                this.switchScreen("screen-gameplay");
-                this.updateGameplayUI();
-                this.triggerEventById("nacimiento_options");
-            } else {
-                this.loadSavedGame();
+        const justBorn = localStorage.getItem("peru_simulator_just_born");
+        if (justBorn === "true") {
+            localStorage.removeItem("peru_simulator_just_born");
+            const savedGame = localStorage.getItem("peru_simulator_current_run");
+            const savedChaos = localStorage.getItem("peru_simulator_chaos_mode");
+            if (savedGame) {
+                this.player = JSON.parse(savedGame);
+                this.injectPlayerMethods();
+                this.chaosMode = savedChaos ? JSON.parse(savedChaos) : false;
             }
+            
+            const logContainer = document.getElementById("console-log");
+            if (logContainer) logContainer.innerHTML = "";
+            this.pushLog(`👶 Naces en ${this.getBirthplaceLabel(this.player.birthplace)}. ¡Que empiece la vida!`);
+            
+            this.switchScreen("screen-gameplay");
+            this.updateGameplayUI();
+            this.triggerEventById("nacimiento_options");
+        } else {
+            this.switchScreen("screen-main-menu");
         }
     }
 
@@ -212,11 +209,7 @@ class PeruSimulator {
         on("btn-action-quit", "click", () => {
             this.playBeep("click");
             if (confirm("¿Estás seguro de salir al menú? Tu progreso no guardado se perderá.")) {
-                if (document.getElementById("screen-gameplay")) {
-                    window.location.href = "index.html";
-                } else {
-                    this.switchScreen("screen-main-menu");
-                }
+                this.switchScreen("screen-main-menu");
             }
         });
 
@@ -313,11 +306,7 @@ class PeruSimulator {
         // Finales
         on("btn-ending-menu", "click", () => {
             this.playBeep("click");
-            if (document.getElementById("screen-gameplay")) {
-                window.location.href = "index.html";
-            } else {
-                this.switchScreen("screen-main-menu");
-            }
+            this.switchScreen("screen-main-menu");
         });
         on("btn-share-text", "click", () => {
             this.playBeep("success");
@@ -412,12 +401,6 @@ class PeruSimulator {
                 this.injectPlayerMethods();
                 this.chaosMode = savedChaos ? JSON.parse(savedChaos) : false;
                 
-                // Redirigir a juego.html si estamos en index.html (menú principal)
-                if (document.getElementById("screen-main-menu")) {
-                    window.location.href = "juego.html";
-                    return;
-                }
-                
                 const toggleChaos = document.getElementById("toggle-chaos-mode");
                 if (toggleChaos) toggleChaos.checked = this.chaosMode;
                 this.switchScreen("screen-gameplay");
@@ -461,10 +444,7 @@ class PeruSimulator {
                 console.error(e);
             }
         } else {
-            // Si no hay partida cargada y estamos en juego.html, redirigir al index.html
-            if (document.getElementById("screen-gameplay")) {
-                window.location.href = "index.html";
-            }
+            alert("No hay partida guardada en este navegador.");
         }
     }
 
@@ -592,10 +572,14 @@ class PeruSimulator {
 
         // Guardar progreso inicial y modo caos
         this.saveGameProgress();
-        localStorage.setItem("peru_simulator_just_born", "true");
         
-        // Redirigir a la pantalla de juego
-        window.location.href = "juego.html";
+        // Iniciar vida directamente en SPA
+        this.switchScreen("screen-gameplay");
+        this.updateGameplayUI();
+        const logContainer = document.getElementById("console-log");
+        if (logContainer) logContainer.innerHTML = "";
+        this.pushLog(`👶 Naces en ${this.getBirthplaceLabel(this.player.birthplace)}. ¡Que empiece la vida!`);
+        this.triggerEventById("nacimiento_options");
     }
 
     getBirthplaceLabel(val) {
@@ -995,30 +979,32 @@ class PeruSimulator {
         if (this.player) {
             this.player.activeEventId = null;
         }
-        
-        // Evento base de restauración visual del panel de eventos
-        this.displayEventCard({
-            title: "Año Completado",
-            description: "Has tomado tu decisión para este ciclo de vida. Presiona 'Siguiente Año' para continuar tu camino.",
-            emoji: "⏳",
-            options: [
-                {
-                    text: "Listo",
-                    resolve: () => {
-                        return "Progresando...";
-                    }
-                }
-            ]
-        });
-        
-        // Remover el evento por defecto activo
-        this.activeEvent = null;
-        if (this.player) {
-            this.player.activeEventId = null;
-        }
-        
-        // Actualizar UI
+
+        // Actualizar estadísticas de UI inmediatamente
         this.updateGameplayUI();
+
+        // Mostrar resumen de resolución con botón activo para avanzar
+        const panel = document.getElementById("event-panel");
+        const titleEl = document.getElementById("event-title");
+        const descEl = document.getElementById("event-description");
+        const emojiEl = document.getElementById("event-large-emoji");
+        const optionsContainer = document.getElementById("event-options");
+        
+        emojiEl.innerText = "✅";
+        titleEl.innerText = "Decisión Registrada";
+        descEl.innerText = resolveMsg;
+        
+        optionsContainer.innerHTML = "";
+        const btn = document.createElement("button");
+        btn.className = "btn btn-primary btn-large";
+        btn.innerText = "⏳ Avanzar al Siguiente Año";
+        btn.addEventListener("click", () => {
+            this.playBeep("click");
+            this.advanceYear();
+        });
+        optionsContainer.appendChild(btn);
+
+        panel.scrollIntoView({ behavior: 'smooth' });
     }
 
     triggerEventById(eventId) {
