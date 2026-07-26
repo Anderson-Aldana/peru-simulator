@@ -528,10 +528,10 @@ class PeruSimulator {
         };
         this.injectPlayerMethods();
 
-        // Aplicar bonificaciones iniciales
+        // Aplicar bonificaciones iniciales de origen
         // Región
         if (birthplace === "lima") {
-            this.player.money += 1000;
+            this.player.luck += 5;
             this.player.stress += 10;
         } else if (birthplace === "costa") {
             this.player.happiness += 10;
@@ -544,17 +544,17 @@ class PeruSimulator {
             this.player.luck += 10;
         }
 
-        // Clase social
+        // Clase social (Alcancía / Dinero realista de bebé)
         if (socialClass === "pobre") {
             this.player.luck += 15;
             this.player.contacts = 0;
-            this.player.money += 10; // Prácticamente nada
+            this.player.money = 0; // Bebé sin ahorros
         } else if (socialClass === "media") {
-            this.player.money += 200;
+            this.player.money = 20; // Alcancía de chibolo
             this.player.contacts += 10;
             this.player.education += 10;
         } else if (socialClass === "rico") {
-            this.player.money += 5000;
+            this.player.money = 100; // Regalo de bautizo
             this.player.contacts += 30;
             this.player.education += 20;
         }
@@ -883,10 +883,18 @@ class PeruSimulator {
         } 
         
         if (rand < decisionChance + quickChance) {
-            // Disparar evento rápido de un solo botón
-            const quickEvt = window.GAME_QUICK_EVENTS[Math.floor(Math.random() * window.GAME_QUICK_EVENTS.length)];
-            this.displayQuickEvent(quickEvt);
-            return;
+            // Disparar evento rápido filtrado estrictamente por la edad actual
+            const eligibleQuick = window.GAME_QUICK_EVENTS.filter(evt => {
+                const min = evt.minAge !== undefined ? evt.minAge : 0;
+                const max = evt.maxAge !== undefined ? evt.maxAge : 100;
+                return age >= min && age <= max;
+            });
+            
+            if (eligibleQuick.length > 0) {
+                const quickEvt = eligibleQuick[Math.floor(Math.random() * eligibleQuick.length)];
+                this.displayQuickEvent(quickEvt);
+                return;
+            }
         }
 
         // Año tranquilo
@@ -1441,6 +1449,10 @@ class PeruSimulator {
     }
 
     socialSearchPartner() {
+        if (this.player.age < 14) {
+            alert("¡Aún eres muy joven! Debes tener al menos 14 años para salir a citas o buscar pareja.");
+            return;
+        }
         if (this.player.partner) {
             alert("Ya tienes una relación activa.");
             return;
@@ -1474,6 +1486,10 @@ class PeruSimulator {
     }
 
     socialAdoptPet() {
+        if (this.player.age < 5) {
+            alert("¡Eres un bebé! Necesitas tener al menos 5 años para cuidar una mascota.");
+            return;
+        }
         const petNames = ["Firulais", "Chucky", "Bobby", "Toby", "Rambo", "Pelusa", "Negrito"];
         const name = petNames[Math.floor(Math.random() * petNames.length)];
         

@@ -1116,60 +1116,88 @@ window.GAME_QUICK_EVENTS = [
         title: "🔋 Gaseosa Helada",
         description: "Hacía un calor insoportable de 31°C y te tomaste una Inca Kola helada de vidrio. Felicidad +10, Salud -2.",
         emoji: "🥤",
+        minAge: 4,
+        maxAge: 95,
         resolve: (p) => { p.happiness = Math.min(100, p.happiness + 10); p.health = Math.max(0, p.health - 2); }
     },
     {
         title: "📱 Yapeo Incorrecto",
         description: "Le yapeaste S/. 150 a un número equivocado por apurado. Intentaste llamar pero te colgaron de inmediato. Dinero -S/. 150, Estrés +10.",
         emoji: "💸",
+        minAge: 16,
+        maxAge: 95,
         resolve: (p) => { p.money = Math.max(-50000, p.money - 150); p.stress = Math.min(100, p.stress + 10); }
     },
     {
         title: "🍀 20 Soles en el Pantalón",
         description: "Revisaste el bolsillo de tu casaca que no usabas desde el invierno pasado y encontraste un billete de S/. 20 arrugado. ¡Suerte! Dinero +S/. 20.",
         emoji: "💵",
+        minAge: 8,
+        maxAge: 95,
         resolve: (p) => { p.money = Math.min(1000000, p.money + 20); p.happiness = Math.min(100, p.happiness + 10); p.luck = Math.min(100, p.luck + 5); }
     },
     {
         title: "🚑 El Dengue del Norte",
         description: "Te picó un mosquito durante tus cortas vacaciones en Piura y contrajiste Dengue. Pasaste una semana con fiebre alta. Salud -20.",
         emoji: "🦟",
+        minAge: 4,
+        maxAge: 95,
         resolve: (p) => { p.health = Math.max(0, p.health - 20); p.stress = Math.min(100, p.stress + 15); }
     },
     {
         title: "🎂 Pollito de Cumpleaños",
         description: "Tu familia te sorprendió con una torta helada y un pollo a la brasa para celebrar tu cumpleaños. Felicidad +20, Contactos +5.",
         emoji: "🍗",
+        minAge: 0,
+        maxAge: 95,
         resolve: (p) => { p.happiness = Math.min(100, p.happiness + 20); p.contacts = Math.min(100, p.contacts + 5); }
     },
     {
         title: "🚔 Serenazgo Molesto",
         description: "Te quedaste conversando en la puerta de tu casa a medianoche y el serenazgo te alumbró con reflector pidiéndote que ingreses a tu domicilio. Estrés +5.",
         emoji: "🚓",
+        minAge: 15,
+        maxAge: 95,
         resolve: (p) => { p.stress = Math.min(100, p.stress + 5); }
     },
     {
         title: "🐶 Adopción Callejera",
         description: "Un perrito callejero flaco te siguió hasta tu casa con cara de pena. Le diste comida y se quedó a dormir en tu puerta. Ganas Karma positivo.",
         emoji: "🐕",
+        minAge: 5,
+        maxAge: 95,
         resolve: (p) => { p.karmaValue += 3; p.happiness = Math.min(100, p.happiness + 10); }
     },
     {
         title: "📦 Trámite de Pasaporte",
         description: "Tuviste que pasar toda la noche haciendo cola afuera de Migraciones para tramitar tu pasaporte bajo el frío limeño. Estrés +20, Educación +2.",
         emoji: "📄",
+        minAge: 18,
+        maxAge: 95,
         resolve: (p) => { p.stress = Math.min(100, p.stress + 20); p.health = Math.max(0, p.health - 5); }
     },
     {
         title: "⚽ Gol de la Selección",
         description: "Perú metió un gol de chalaca histórico y todo tu vecindario retumbó con gritos de alegría. Felicidad +15.",
         emoji: "⚽",
+        minAge: 4,
+        maxAge: 95,
         resolve: (p) => { p.happiness = Math.min(100, p.happiness + 15); }
     },
     {
         title: "🍠 Causa Rellena por 8 Días",
         description: "Tu mamá preparó una bandeja gigante de causa rellena de atún y comiste lo mismo de almuerzo y cena durante 8 días seguidos. Felicidad -5, Salud +5.",
         emoji: "🥔",
+        minAge: 4,
+        maxAge: 95,
         resolve: (p) => { p.happiness = Math.max(0, p.happiness - 5); p.health = Math.min(100, p.health + 5); }
+    },
+    {
+        title: "🍻 Primer Trago en la Esquina",
+        description: "Tus amigos de la cuadra abrieron unas cervezas en el pasaje a tus 13 años. Probaste un vaso helado por curiosidad. Felicidad +10, Salud -5, Educación -5.",
+        emoji: "🍺",
+        minAge: 12,
+        maxAge: 17,
+        resolve: (p) => { p.happiness = Math.min(100, p.happiness + 10); p.health = Math.max(0, p.health - 5); p.education = Math.max(0, p.education - 5); }
     }
 ];
