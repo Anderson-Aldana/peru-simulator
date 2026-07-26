@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇵🇪 Perú Simulator: Naciste, Ahora Sobrevive</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👶</text></svg>">
+    <!-- Google Fonts -->
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            alert("JS Error: " + message + "\nSource: " + source + "\nLine: " + lineno + ":" + colno);
+            return false;
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-wrapper">
+        <!-- PANTALLA 1: MENÚ PRINCIPAL -->
+        <section id="screen-main-menu" class="game-screen active">
+            <div class="menu-header">
+                <div class="peru-flag"></div>
+                <h1>PERÚ SIMULATOR</h1>
+                <p class="subtitle">"Naciste. Ahora sobrevive."</p>
+            </div>
+            
+            <div class="menu-options">
+                <button id="btn-new-game" class="btn btn-primary btn-pulse">▶ Nueva Vida</button>
+                <button id="btn-load-game" class="btn btn-secondary" disabled>Cargar Partida</button>
+                <button id="btn-open-achievements" class="btn btn-secondary">🏆 Logros <span id="unlocked-count-badge">(0)</span></button>
+                <button id="btn-open-stats-history" class="btn btn-secondary">📊 Récords & Historial</button>
+            </div>
+
+            <div class="chaos-toggle-container">
+                <label class="switch-container">
+                    <input type="checkbox" id="toggle-chaos-mode">
+                    <span class="switch-slider"></span>
+                </label>
+                <div class="chaos-label-group">
+                    <span class="chaos-title">🔥 Modo Caótico</span>
+                    <span class="chaos-desc">Eventos más absurdos, memes y mala suerte garantizada.</span>
+                </div>
+            </div>
+
+            <div class="menu-footer">
+                <p>Versión 1.2.0 • Hecho con ☕ y 🍗 a la brasa</p>
+            </div>
+        </section>
+
+        <!-- PANTALLA 2: CREACIÓN DE PERSONAJE -->
+        <section id="screen-character-creator" class="game-screen">
+            <div class="screen-title">
+                <h2>Crea tu Personaje</h2>
+                <p>Tu origen definirá tu destino y tus estadísticas iniciales.</p>
+            </div>
+
+            <form id="creator-form" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="char-name">Nombre Completo:</label>
+                    <div class="input-with-button">
+                        <input type="text" id="char-name" placeholder="Ej. Brayan Quispe" maxlength="25" required>
+                        <button type="button" id="btn-random-name" class="btn btn-small">🎲 Azar</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Identidad de Género:</label>
+                    <div class="radio-group">
+                        <label class="radio-card">
+                            <input type="radio" name="char-gender" value="m" checked>
+                            <span class="radio-content">
+                                <span class="emoji">👨</span>
+                                <span class="label">Masculino</span>
+                            </span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="char-gender" value="f">
+                            <span class="radio-content">
+                                <span class="emoji">👩</span>
+                                <span class="label">Femenino</span>
+                            </span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="char-gender" value="nb">
+                            <span class="radio-content">
+                                <span class="emoji">🛸</span>
+                                <span class="label">Combi Voladora</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Lugar de Nacimiento:</label>
+                    <div class="radio-grid-4">
+                        <label class="radio-card mini">
+                            <input type="radio" name="char-birthplace" value="lima" checked>
+                            <span class="radio-content">
+                                <span class="emoji">🏙️</span>
+                                <span class="label-title">Lima</span>
+                                <span class="label-desc">S/. +1000, Estrés +10%</span>
+                            </span>
+                        </label>
+                        <label class="radio-card mini">
+                            <input type="radio" name="char-birthplace" value="costa">
+                            <span class="radio-content">
+                                <span class="emoji">🌊</span>
+                                <span class="label-title">Costa</span>
+                                <span class="label-desc">Felicidad +10, Salud +5</span>
+                            </span>
+                        </label>
+                        <label class="radio-card mini">
+                            <input type="radio" name="char-birthplace" value="sierra">
+                            <span class="radio-content">
+                                <span class="emoji">🏔️</span>
+                                <span class="label-title">Sierra</span>
+                                <span class="label-desc">Salud +15, Educación +5</span>
+                            </span>
+                        </label>
+                        <label class="radio-card mini">
+                            <input type="radio" name="char-birthplace" value="selva">
+                            <span class="radio-content">
+                                <span class="emoji">🌴</span>
+                                <span class="label-title">Selva</span>
+                                <span class="label-desc">Felicidad +15, Suerte +10</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Situación Económica Familiar:</label>
+                    <div class="radio-group">
+                        <label class="radio-card">
+                            <input type="radio" name="char-class" value="pobre" checked>
+                            <span class="radio-content">
+                                <span class="emoji">🪵</span>
+                                <span class="label-title">Humilde</span>
+                                <span class="label-desc">Suerte +15, Contactos 0</span>
+                            </span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="char-class" value="media">
+                            <span class="radio-content">
+                                <span class="emoji">🏢</span>
+                                <span class="label-title">Clase Media</span>
+                                <span class="label-desc">S/. +200, Todo equilibrado</span>
+                            </span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="char-class" value="rico">
+                            <span class="radio-content">
+                                <span class="emoji">💳</span>
+                                <span class="label-title">Acomodada</span>
+                                <span class="label-desc">S/. +5000, Contactos +30</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Dinámica Familiar:</label>
+                    <div class="radio-grid-4">
+                        <label class="radio-card mini">
+                            <input type="radio" name="char-family" value="estricta" checked>
+                            <span class="radio-content">
+                                <span class="label-title">Estricta</span>
+                                <span class="label-desc">Educación +10</span>
+                            </span>
+                        </label>
+                        <label class="radio-card mini">
+                            <input type="radio" name="char-family" value="normal">
+                            <span class="radio-content">
+                                <span class="label-title">Normal</span>
+                                <span class="label-desc">Equilibrada</span>
+                            </span>
+                        </label>
+                        <label class="radio-card mini">
+                            <input type="radio" name="char-family" value="relajada">
+                            <span class="radio-content">
+                                <span class="label-title">Relajada</span>
+                                <span class="label-desc">Felicidad +10</span>
+                            </span>
+                        </label>
+                        <label class="radio-card mini">
+                            <input type="radio" name="char-family" value="caotica">
+                            <span class="radio-content">
+                                <span class="label-title">Caótica</span>
+                                <span class="label-desc">Estrés +10, Suerte +5</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="creator-actions">
+                    <button type="button" id="btn-creator-back" class="btn btn-secondary">Atrás</button>
+                    <button type="button" id="btn-start-life" class="btn btn-primary">¡Nacer! 👶</button>
+                </div>
+            </form>
+        </section>
+
+
+    </div>
+
+    <!-- MODAL 1: LOGROS -->
+    <div id="modal-achievements" class="modal-overlay">
+        <div class="modal-content large">
+            <header class="modal-header">
+                <h3>🏆 Logros Desbloqueados</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="modal-body">
+                <p class="modal-intro">Descubre los logros completados en tu historial de juego. Hay <strong id="total-achievements-count">40</strong> logros en total.</p>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Se rellena con JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: HISTORIAL Y RÉCORDS -->
+    <div id="modal-stats-history" class="modal-overlay">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>📊 Récords & Historial de Vidas</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="modal-body">
+                <div class="records-summary">
+                    <div class="record-box">
+                        <span class="record-num" id="record-total-lives">0</span>
+                        <span class="record-label">Vidas Jugadas</span>
+                    </div>
+                    <div class="record-box">
+                        <span class="record-num" id="record-max-age">0</span>
+                        <span class="record-label">Mayor Edad</span>
+                    </div>
+                    <div class="record-box">
+                        <span class="record-num" id="record-max-money">S/. 0</span>
+                        <span class="record-label">Máxima Fortuna</span>
+                    </div>
+                </div>
+                <h4 class="section-subtitle">Últimas Vidas Registradas</h4>
+                <div class="history-list" id="history-list">
+                    <p class="empty-msg">Aún no tienes vidas registradas en este navegador.</p>
+                </div>
+                <div class="modal-actions-centered">
+                    <button id="btn-clear-history" class="btn btn-danger btn-small">Borrar Datos de Guardado</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- SCRIPTS DEL JUEGO -->
+    <script src="events.js"></script>
+    <script src="achievements.js"></script>
+    <script src="endings.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

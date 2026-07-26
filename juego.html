@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇵🇪 Perú Simulator: Sobrevive en el Perú</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👶</text></svg>">
+    <!-- Google Fonts -->
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            alert("JS Error: " + message + "\nSource: " + source + "\nLine: " + lineno + ":" + colno);
+            return false;
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-wrapper">
+        <!-- PANTALLA 3: TABLERO DE JUEGO (GAMEPLAY) -->
+        <section id="screen-gameplay" class="game-screen active">
+            <!-- Header de Estado Físico/Identidad -->
+            <header class="gameplay-header">
+                <div class="character-summary">
+                    <div class="char-avatar" id="gameplay-avatar">👶</div>
+                    <div class="char-details">
+                        <h3 id="gameplay-name">Cargando...</h3>
+                        <div class="char-sub-details">
+                            <span id="gameplay-gender">Hombre</span> • 
+                            <span id="gameplay-birthplace">Lima</span> • 
+                            <span id="gameplay-class" class="badge">Clase Media</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-meta">
+                    <div class="meta-item age-badge">Edad: <strong id="gameplay-age">0</strong> años</div>
+                    <div class="meta-item status-badge" id="gameplay-stage">Bebé</div>
+                    <div class="meta-item karma-badge" id="gameplay-karma" title="Karma">😇 Bueno</div>
+                    <div id="gameplay-chaos-badge" class="badge badge-danger hide">🔥 Caos</div>
+                </div>
+            </header>
+
+            <!-- Barra de Progreso de la Vida -->
+            <div class="life-progress-bar-container">
+                <div class="life-progress-fill" id="gameplay-life-progress" style="width: 0%;"></div>
+            </div>
+
+            <!-- Panel de Estadísticas en Cuadrícula -->
+            <section class="stats-grid">
+                <div class="stat-card" data-stat="money">
+                    <div class="stat-header">
+                        <span class="stat-emoji">💰</span>
+                        <span class="stat-title">Dinero</span>
+                    </div>
+                    <div class="stat-value" id="stat-money">S/. 0</div>
+                </div>
+                <div class="stat-card" data-stat="health">
+                    <div class="stat-header">
+                        <span class="stat-emoji">❤️</span>
+                        <span class="stat-title">Salud</span>
+                        <span class="stat-percentage" id="stat-health-percent">100%</span>
+                    </div>
+                    <div class="stat-bar"><div class="stat-bar-fill val-good" id="stat-health-bar" style="width: 100%;"></div></div>
+                </div>
+                <div class="stat-card" data-stat="happiness">
+                    <div class="stat-header">
+                        <span class="stat-emoji">😊</span>
+                        <span class="stat-title">Felicidad</span>
+                        <span class="stat-percentage" id="stat-happiness-percent">100%</span>
+                    </div>
+                    <div class="stat-bar"><div class="stat-bar-fill val-good" id="stat-happiness-bar" style="width: 100%;"></div></div>
+                </div>
+                <div class="stat-card" data-stat="stress">
+                    <div class="stat-header">
+                        <span class="stat-emoji">😰</span>
+                        <span class="stat-title">Estrés</span>
+                        <span class="stat-percentage" id="stat-stress-percent">0%</span>
+                    </div>
+                    <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-stress-bar" style="width: 0%;"></div></div>
+                </div>
+                <div class="stat-card" data-stat="education">
+                    <div class="stat-header">
+                        <span class="stat-emoji">📚</span>
+                        <span class="stat-title">Educación</span>
+                        <span class="stat-percentage" id="stat-education-percent">0%</span>
+                    </div>
+                    <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-education-bar" style="width: 0%;"></div></div>
+                </div>
+                <div class="stat-card" data-stat="contacts">
+                    <div class="stat-header">
+                        <span class="stat-emoji">🤝</span>
+                        <span class="stat-title">Contactos</span>
+                        <span class="stat-percentage" id="stat-contacts-percent">0%</span>
+                    </div>
+                    <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-contacts-bar" style="width: 0%;"></div></div>
+                </div>
+            </section>
+
+            <!-- Panel de Estado Adicional (Empleo, Pareja, Mascota, Activos) -->
+            <section class="status-summary-panel">
+                <div class="summary-chip" id="summary-job" title="Trabajo/Estudio">💼 Ninguno</div>
+                <div class="summary-chip" id="summary-partner" title="Pareja">❤️ Soltero</div>
+                <div class="summary-chip" id="summary-assets" title="Propiedades">🏠 Sin bienes</div>
+                <div class="summary-chip" id="summary-pets" title="Mascotas">🐕 Sin mascotas</div>
+            </section>
+
+            <!-- Panel de Evento Principal -->
+            <main class="event-panel" id="event-panel">
+                <div class="event-image-container">
+                    <span id="event-large-emoji" class="large-emoji">👶</span>
+                </div>
+                <div class="event-content">
+                    <h2 class="event-title" id="event-title">¡Has nacido!</h2>
+                    <p class="event-description" id="event-description">Estás en los brazos de tu madre en un hospital. El médico te da una nalgada y empiezas a llorar en territorio peruano. ¡Buena suerte!</p>
+                </div>
+                <div class="event-options" id="event-options">
+                    <button class="btn btn-option">Continuar</button>
+                </div>
+            </main>
+
+            <!-- Consola de Registro Histórico (Log) -->
+            <section class="console-log-container">
+                <h4 class="console-title">Bitácora de Vida</h4>
+                <div class="console-log" id="console-log">
+                    <div class="log-entry">👶 Naciste en el Perú. ¡El juego de la supervivencia comienza!</div>
+                </div>
+            </section>
+
+            <!-- Tab Footer de Navegación de Acciones -->
+            <footer class="gameplay-footer-actions">
+                <button id="btn-action-next-year" class="action-tab-btn pulse-glow">
+                    <span class="icon">⏳</span>
+                    <span class="label">Siguiente Año</span>
+                </button>
+                <button id="btn-tab-activities" class="action-tab-btn">
+                    <span class="icon">💼</span>
+                    <span class="label">Actividades</span>
+                </button>
+                <button id="btn-tab-relationships" class="action-tab-btn">
+                    <span class="icon">👥</span>
+                    <span class="label">Relaciones</span>
+                </button>
+                <button id="btn-tab-minigames" class="action-tab-btn">
+                    <span class="icon">🎮</span>
+                    <span class="label">Minijuegos</span>
+                </button>
+                <button id="btn-action-save" class="action-tab-btn">
+                    <span class="icon">💾</span>
+                    <span class="label">Guardar</span>
+                </button>
+                <button id="btn-action-quit" class="action-tab-btn">
+                    <span class="icon">🚪</span>
+                    <span class="label">Salir</span>
+                </button>
+            </footer>
+        </section>
+
+        <!-- PANTALLA 4: PANTALLA DE FINAL (DNI / CERTIFICADO) -->
+        <section id="screen-ending" class="game-screen">
+            <div class="ending-header">
+                <span class="ending-icon" id="ending-emoji">🏆</span>
+                <h2 id="ending-rank">FINAL: LEYENDA PERUANA</h2>
+                <p class="subtitle">Tu vida en el Perú ha llegado a su fin.</p>
+            </div>
+
+            <div class="ending-card">
+                <div class="ending-desc" id="ending-description">
+                    Viviste una vida espectacular, acumulaste millones, sobreviviste a la SUNAT, comiste cebiche todos los fines de semana y compraste 3 terrenos en Carabayllo.
+                </div>
+                <div class="ending-stats">
+                    <div class="end-stat-item">
+                        <span class="lbl">Edad alcanzada:</span>
+                        <strong id="ending-age-reached">94 años</strong>
+                    </div>
+                    <div class="end-stat-item">
+                        <span class="lbl">Fortuna final:</span>
+                        <strong id="ending-fortune">S/. 18,400,000</strong>
+                    </div>
+                    <div class="end-stat-item">
+                        <span class="lbl">Estado de Relaciones:</span>
+                        <strong id="ending-relations">Casado, 3 hijos</strong>
+                    </div>
+                    <div class="end-stat-item">
+                        <span class="lbl">Último Trabajo:</span>
+                        <strong id="ending-job">Gerente General</strong>
+                    </div>
+                    <div class="end-stat-item">
+                        <span class="lbl">Karma final:</span>
+                        <strong id="ending-karma-type">Santo / Caótico</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas para Exportar Imagen DNI -->
+            <div class="canvas-container">
+                <canvas id="dni-canvas" width="600" height="360"></canvas>
+                <p class="canvas-tip">📸 Generado automáticamente como tu "Documento Nacional de Identidad del Simulador".</p>
+            </div>
+
+            <div class="ending-actions">
+                <button id="btn-download-dni" class="btn btn-primary">💾 Descargar DNI Virtual</button>
+                <button id="btn-share-text" class="btn btn-secondary">🔗 Copiar Resumen en Texto</button>
+                <button id="btn-ending-menu" class="btn btn-secondary">🏠 Volver al Menú</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL 3: ACTIVIDADES Y COMPRAS -->
+    <div id="modal-activities" class="modal-overlay">
+        <div class="modal-content medium">
+            <header class="modal-header">
+                <h3>💼 Actividades y Adquisiciones</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <!-- Tabs internas del modal -->
+            <div class="modal-tabs">
+                <button class="tab-btn active" data-tab="tab-content-activities">Acciones & Estilo de Vida</button>
+                <button class="tab-btn" data-tab="tab-content-purchases">Tienda (Compras/Bienes)</button>
+            </div>
+            <div class="modal-body">
+                <!-- Pestaña Actividades -->
+                <div id="tab-content-activities" class="tab-panel active">
+                    <div class="activities-list" id="activities-list">
+                        <!-- Generado por JS según la edad -->
+                    </div>
+                </div>
+                <!-- Pestaña Compras -->
+                <div id="tab-content-purchases" class="tab-panel">
+                    <div class="purchases-list" id="purchases-list">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: RELACIONES -->
+    <div id="modal-relationships" class="modal-overlay">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>👥 Relaciones Sociales</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="modal-body">
+                <div class="relationships-list" id="relationships-list">
+                    <!-- Generado por JS -->
+                </div>
+                <div class="social-actions">
+                    <button id="btn-find-partner" class="btn btn-secondary btn-full">💖 Buscar Pareja</button>
+                    <button id="btn-adopt-pet" class="btn btn-secondary btn-full">🐕 Adoptar Mascota (Firulais)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: MINIJUEGOS -->
+    <div id="modal-minigames" class="modal-overlay">
+        <div class="modal-content medium">
+            <header class="modal-header">
+                <h3>🎮 Minijuegos Criollos</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <!-- Selector de minijuego -->
+            <div class="minigames-selector" id="minigames-selector-view">
+                <p>Elige un minijuego para ganar dinero, felicidad, o arriesgarlo todo:</p>
+                <div class="minigame-card-btn" id="btn-select-penalties">
+                    <span class="card-emoji">⚽</span>
+                    <div class="card-info">
+                        <h4>El Penalty contra el Arquero Nacional</h4>
+                        <p>Patea un penal. Si anotas, ganas S/. 500 y felicidad. Si fallas, el estrés sube.</p>
+                    </div>
+                </div>
+                <div class="minigame-card-btn" id="btn-select-memory">
+                    <span class="card-emoji">🚌</span>
+                    <div class="card-info">
+                        <h4>Memoria del Metropolitano</h4>
+                        <p>Encuentra los pares de pasajeros ordenados antes de que la combi choque. Gana educación y felicidad.</p>
+                    </div>
+                </div>
+                <div class="minigame-card-btn" id="btn-select-roulette">
+                    <span class="card-emoji">🎰</span>
+                    <div class="card-info">
+                        <h4>Ruleta de la Suerte del Jirón de la Unión</h4>
+                        <p>Apuesta S/. 100. Puedes multiplicar tu inversión por 5 o perderlo todo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área del minijuego activo -->
+            <div class="minigame-play-area hide" id="minigame-play-area">
+                <button id="btn-back-to-selector" class="btn btn-small btn-secondary">&larr; Volver</button>
+                
+                <!-- Minijuego 1: Penales -->
+                <div id="minigame-penalties" class="minigame-sub-panel hide">
+                    <h4>⚽ ¡Toma el Penal decisivo!</h4>
+                    <p class="minigame-instructions">Elige dónde disparar el balón. El arquero elegirá una dirección al azar para tapar.</p>
+                    <div class="penalty-field">
+                        <div class="goal-post">
+                            <button class="goal-target" data-dir="izq-sup">Arriba Izquierda</button>
+                            <button class="goal-target" data-dir="centro-sup">Arriba Centro</button>
+                            <button class="goal-target" data-dir="der-sup">Arriba Derecha</button>
+                            <button class="goal-target" data-dir="izq-inf">Abajo Izquierda</button>
+                            <button class="goal-target" data-dir="centro-inf">Abajo Centro</button>
+                            <button class="goal-target" data-dir="der-inf">Abajo Derecha</button>
+                        </div>
+                        <div class="penalty-ball-pos">⚽</div>
+                    </div>
+                    <div class="minigame-result-msg" id="penalty-result"></div>
+                </div>
+
+                <!-- Minijuego 2: Memoria -->
+                <div id="minigame-memory" class="minigame-sub-panel hide">
+                    <h4>🚌 Memoria del Metropolitano</h4>
+                    <p class="minigame-instructions">Encuentra los pares de emojis antes de que el Metropolitano se llene. Tiempo restante: <strong id="memory-timer">20s</strong></p>
+                    <div class="memory-grid" id="memory-grid">
+                        <!-- Generado por JS -->
+                    </div>
+                    <div class="minigame-result-msg" id="memory-result"></div>
+                </div>
+
+                <!-- Minijuego 3: Ruleta -->
+                <div id="minigame-roulette" class="minigame-sub-panel hide">
+                    <h4>🎰 Ruleta de la Suerte</h4>
+                    <p class="minigame-instructions">Apuesta S/. 100 eligiendo una de las opciones de la ruleta:</p>
+                    <div class="roulette-bet-options">
+                        <button class="btn btn-secondary roulette-bet-btn" data-bet="red">🔴 Rojo (Doble o nada)</button>
+                        <button class="btn btn-secondary roulette-bet-btn" data-bet="black">⚫ Negro (Doble o nada)</button>
+                        <button class="btn btn-secondary roulette-bet-btn" data-bet="gold">🟡 Dorado (Multiplica x5 - 15% prob)</button>
+                    </div>
+                    <div class="roulette-wheel-container">
+                        <div class="roulette-wheel" id="roulette-wheel-visual">🎡</div>
+                    </div>
+                    <div class="minigame-result-msg" id="roulette-result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: LOGROS (Incluido por consistencia de JS) -->
+    <div id="modal-achievements" class="modal-overlay">
+        <div class="modal-content large">
+            <header class="modal-header">
+                <h3>🏆 Logros Desbloqueados</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="modal-body">
+                <p class="modal-intro">Descubre los logros completados en tu historial de juego. Hay <strong id="total-achievements-count">40</strong> logros en total.</p>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Se rellena con JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: HISTORIAL Y RÉCORDS (Incluido por consistencia de JS) -->
+    <div id="modal-stats-history" class="modal-overlay">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>📊 Récords & Historial de Vidas</h3>
+                <button class="modal-close">&times;</button>
+            </header>
+            <div class="modal-body">
+                <div class="records-summary">
+                    <div class="record-box">
+                        <span class="record-num" id="record-total-lives">0</span>
+                        <span class="record-label">Vidas Jugadas</span>
+                    </div>
+                    <div class="record-box">
+                        <span class="record-num" id="record-max-age">0</span>
+                        <span class="record-label">Mayor Edad</span>
+                    </div>
+                    <div class="record-box">
+                        <span class="record-num" id="record-max-money">S/. 0</span>
+                        <span class="record-label">Máxima Fortuna</span>
+                    </div>
+                </div>
+                <h4 class="section-subtitle">Últimas Vidas Registradas</h4>
+                <div class="history-list" id="history-list">
+                    <p class="empty-msg">Aún no tienes vidas registradas en este navegador.</p>
+                </div>
+                <div class="modal-actions-centered">
+                    <button id="btn-clear-history" class="btn btn-danger btn-small">Borrar Datos de Guardado</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS DEL JUEGO -->
+    <script src="events.js"></script>
+    <script src="achievements.js"></script>
+    <script src="endings.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
