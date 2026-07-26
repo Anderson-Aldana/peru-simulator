@@ -8,7 +8,7 @@
     <!-- Google Fonts para Neo-Brutalismo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Space+Grotesk:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -200,7 +200,7 @@
             </div>
         </section>
 
-        <!-- PANTALLA 3: TABLERO DE JUEGO (GAMEPLAY) -->
+        <!-- PANTALLA 3: TABLERO DE JUEGO (GAMEPLAY FULL-SCREEN DASHBOARD) -->
         <section id="screen-gameplay" class="game-screen">
             <div class="gameplay-container">
                 <!-- Header de Estado Físico/Identidad -->
@@ -216,104 +216,112 @@
                             </div>
                         </div>
                     </div>
-                    <div class="game-meta">
-                        <div class="meta-badge age-badge">EDAD: <strong id="gameplay-age">0</strong> AÑOS</div>
-                        <div class="meta-badge status-badge" id="gameplay-stage">Bebé</div>
-                        <div class="meta-badge karma-badge" id="gameplay-karma">😇 Bueno</div>
-                        <div id="gameplay-chaos-badge" class="meta-badge chaos-badge hide">🔥 CAOS</div>
+                    
+                    <div class="gameplay-header-right">
+                        <div class="game-meta">
+                            <div class="meta-badge age-badge">EDAD: <strong id="gameplay-age">0</strong> AÑOS</div>
+                            <div class="meta-badge status-badge" id="gameplay-stage">Bebé</div>
+                            <div class="meta-badge karma-badge" id="gameplay-karma">😇 Bueno</div>
+                            <div id="gameplay-chaos-badge" class="meta-badge chaos-badge hide">🔥 CAOS</div>
+                        </div>
+                        <div class="life-progress-bar-container neo-box">
+                            <span class="progress-txt">VIDA (0-95):</span>
+                            <div class="life-progress-track">
+                                <div class="life-progress-fill" id="gameplay-life-progress" style="width: 0%;"></div>
+                            </div>
+                        </div>
                     </div>
                 </header>
 
-                <!-- Barra de Progreso de la Vida -->
-                <div class="life-progress-bar-container neo-box">
-                    <div class="life-progress-label">PROGRESO DE VIDA (0 - 95 AÑOS)</div>
-                    <div class="life-progress-track">
-                        <div class="life-progress-fill" id="gameplay-life-progress" style="width: 0%;"></div>
+                <!-- Dashboard Layout Principal: Columna Izquierda (Stats + Status + Log) & Columna Derecha (Evento Principal) -->
+                <div class="gameplay-dashboard-body">
+                    <div class="stats-column">
+                        <!-- Panel de Estadísticas en Cuadrícula -->
+                        <section class="stats-grid">
+                            <div class="stat-card neo-card" data-stat="money">
+                                <div class="stat-header">
+                                    <span class="stat-emoji">💰</span>
+                                    <span class="stat-title">DINERO</span>
+                                </div>
+                                <div class="stat-value" id="stat-money">S/. 0</div>
+                            </div>
+                            <div class="stat-card neo-card" data-stat="health">
+                                <div class="stat-header">
+                                    <span class="stat-emoji">❤️</span>
+                                    <span class="stat-title">SALUD</span>
+                                    <span class="stat-percentage" id="stat-health-percent">100%</span>
+                                </div>
+                                <div class="stat-bar"><div class="stat-bar-fill val-good" id="stat-health-bar" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="stat-card neo-card" data-stat="happiness">
+                                <div class="stat-header">
+                                    <span class="stat-emoji">😊</span>
+                                    <span class="stat-title">FELICIDAD</span>
+                                    <span class="stat-percentage" id="stat-happiness-percent">100%</span>
+                                </div>
+                                <div class="stat-bar"><div class="stat-bar-fill val-good" id="stat-happiness-bar" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="stat-card neo-card" data-stat="stress">
+                                <div class="stat-header">
+                                    <span class="stat-emoji">😰</span>
+                                    <span class="stat-title">ESTRÉS</span>
+                                    <span class="stat-percentage" id="stat-stress-percent">0%</span>
+                                </div>
+                                <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-stress-bar" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="stat-card neo-card" data-stat="education">
+                                <div class="stat-header">
+                                    <span class="stat-emoji">📚</span>
+                                    <span class="stat-title">EDUCACIÓN</span>
+                                    <span class="stat-percentage" id="stat-education-percent">0%</span>
+                                </div>
+                                <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-education-bar" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="stat-card neo-card" data-stat="contacts">
+                                <div class="stat-header">
+                                    <span class="stat-emoji">🤝</span>
+                                    <span class="stat-title">CONTACTOS</span>
+                                    <span class="stat-percentage" id="stat-contacts-percent">0%</span>
+                                </div>
+                                <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-contacts-bar" style="width: 0%;"></div></div>
+                            </div>
+                        </section>
+
+                        <!-- Panel de Estado Adicional -->
+                        <section class="status-summary-panel">
+                            <div class="summary-chip neo-chip" id="summary-job">💼 Ninguno</div>
+                            <div class="summary-chip neo-chip" id="summary-partner">❤️ Soltero</div>
+                            <div class="summary-chip neo-chip" id="summary-assets">🏠 Sin bienes</div>
+                            <div class="summary-chip neo-chip" id="summary-pets">🐕 Sin mascotas</div>
+                        </section>
+
+                        <!-- Consola de Registro Histórico (Log) -->
+                        <section class="console-log-container neo-card">
+                            <h4 class="console-title">📜 BITÁCORA DE VIDA PERUANA</h4>
+                            <div class="console-log" id="console-log">
+                                <div class="log-entry">👶 Naciste en el Perú. ¡El juego de la supervivencia comienza!</div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Columna de Evento Activo -->
+                    <div class="event-column">
+                        <main class="event-panel neo-card" id="event-panel">
+                            <div class="event-image-container">
+                                <span id="event-large-emoji" class="large-emoji">👶</span>
+                            </div>
+                            <div class="event-content">
+                                <h2 class="event-title" id="event-title">¡Has nacido!</h2>
+                                <p class="event-description" id="event-description">Estás en los brazos de tu madre en un hospital. El médico te da una nalgada y empiezas a llorar en territorio peruano. ¡Buena suerte!</p>
+                            </div>
+                            <div class="event-options" id="event-options">
+                                <button class="btn btn-option">Continuar</button>
+                            </div>
+                        </main>
                     </div>
                 </div>
 
-                <!-- Panel de Estadísticas en Cuadrícula -->
-                <section class="stats-grid">
-                    <div class="stat-card neo-card" data-stat="money">
-                        <div class="stat-header">
-                            <span class="stat-emoji">💰</span>
-                            <span class="stat-title">DINERO</span>
-                        </div>
-                        <div class="stat-value" id="stat-money">S/. 0</div>
-                    </div>
-                    <div class="stat-card neo-card" data-stat="health">
-                        <div class="stat-header">
-                            <span class="stat-emoji">❤️</span>
-                            <span class="stat-title">SALUD</span>
-                            <span class="stat-percentage" id="stat-health-percent">100%</span>
-                        </div>
-                        <div class="stat-bar"><div class="stat-bar-fill val-good" id="stat-health-bar" style="width: 100%;"></div></div>
-                    </div>
-                    <div class="stat-card neo-card" data-stat="happiness">
-                        <div class="stat-header">
-                            <span class="stat-emoji">😊</span>
-                            <span class="stat-title">FELICIDAD</span>
-                            <span class="stat-percentage" id="stat-happiness-percent">100%</span>
-                        </div>
-                        <div class="stat-bar"><div class="stat-bar-fill val-good" id="stat-happiness-bar" style="width: 100%;"></div></div>
-                    </div>
-                    <div class="stat-card neo-card" data-stat="stress">
-                        <div class="stat-header">
-                            <span class="stat-emoji">😰</span>
-                            <span class="stat-title">ESTRÉS</span>
-                            <span class="stat-percentage" id="stat-stress-percent">0%</span>
-                        </div>
-                        <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-stress-bar" style="width: 0%;"></div></div>
-                    </div>
-                    <div class="stat-card neo-card" data-stat="education">
-                        <div class="stat-header">
-                            <span class="stat-emoji">📚</span>
-                            <span class="stat-title">EDUCACIÓN</span>
-                            <span class="stat-percentage" id="stat-education-percent">0%</span>
-                        </div>
-                        <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-education-bar" style="width: 0%;"></div></div>
-                    </div>
-                    <div class="stat-card neo-card" data-stat="contacts">
-                        <div class="stat-header">
-                            <span class="stat-emoji">🤝</span>
-                            <span class="stat-title">CONTACTOS</span>
-                            <span class="stat-percentage" id="stat-contacts-percent">0%</span>
-                        </div>
-                        <div class="stat-bar"><div class="stat-bar-fill val-low" id="stat-contacts-bar" style="width: 0%;"></div></div>
-                    </div>
-                </section>
-
-                <!-- Panel de Estado Adicional (Empleo, Pareja, Mascota, Activos) -->
-                <section class="status-summary-panel">
-                    <div class="summary-chip neo-chip" id="summary-job">💼 Ninguno</div>
-                    <div class="summary-chip neo-chip" id="summary-partner">❤️ Soltero</div>
-                    <div class="summary-chip neo-chip" id="summary-assets">🏠 Sin bienes</div>
-                    <div class="summary-chip neo-chip" id="summary-pets">🐕 Sin mascotas</div>
-                </section>
-
-                <!-- Panel de Evento Principal -->
-                <main class="event-panel neo-card" id="event-panel">
-                    <div class="event-image-container">
-                        <span id="event-large-emoji" class="large-emoji">👶</span>
-                    </div>
-                    <div class="event-content">
-                        <h2 class="event-title" id="event-title">¡Has nacido!</h2>
-                        <p class="event-description" id="event-description">Estás en los brazos de tu madre en un hospital. El médico te da una nalgada y empiezas a llorar en territorio peruano. ¡Buena suerte!</p>
-                    </div>
-                    <div class="event-options" id="event-options">
-                        <button class="btn btn-option">Continuar</button>
-                    </div>
-                </main>
-
-                <!-- Consola de Registro Histórico (Log) -->
-                <section class="console-log-container neo-card">
-                    <h4 class="console-title">📜 BITÁCORA DE VIDA PERUANA</h4>
-                    <div class="console-log" id="console-log">
-                        <div class="log-entry">👶 Naciste en el Perú. ¡El juego de la supervivencia comienza!</div>
-                    </div>
-                </section>
-
-                <!-- Tab Footer de Navegación de Acciones -->
+                <!-- Footer de Navegación de Acciones -->
                 <footer class="gameplay-footer-actions neo-card">
                     <button id="btn-action-next-year" class="btn btn-primary btn-action-main">
                         <span class="icon">⏳</span>
