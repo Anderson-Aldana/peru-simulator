@@ -22,16 +22,17 @@
     --font-body: 'Outfit', sans-serif;
 }
 
-/* Reset y Fondo Global Centrado con Márgenes */
+/* Reset y Fondo Global con Imagen de Perú Centrado */
 html, body {
     width: 100vw;
     height: 100vh;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #D1D5DB;
-    background-image: radial-gradient(#9CA3AF 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-image: linear-gradient(rgba(17, 24, 39, 0.40), rgba(17, 24, 39, 0.60)), url('peru_menu_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     font-family: var(--font-body);
     color: var(--neo-dark);
     display: flex;
@@ -212,7 +213,7 @@ html, body {
 #screen-main-menu {
     justify-content: center;
     align-items: center;
-    background: #E5E7EB;
+    background: transparent;
 }
 
 .menu-card {
@@ -221,8 +222,11 @@ html, body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 24px;
+    gap: 18px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 .peru-flag-badge {
@@ -231,35 +235,37 @@ html, body {
     color: #FFF;
     font-family: var(--font-heading);
     font-weight: 900;
-    font-size: 0.85rem;
-    padding: 4px 14px;
+    font-size: 0.9rem;
+    padding: 6px 16px;
     border: 2px solid #000;
-    box-shadow: 2px 2px 0px #000;
+    box-shadow: 2.5px 2.5px 0px #000;
     border-radius: 20px;
     margin-bottom: 8px;
 }
 
 .main-title {
     font-family: var(--font-heading);
-    font-size: 2.4rem;
+    font-size: 2.8rem;
     font-weight: 900;
     letter-spacing: -1px;
     line-height: 1;
-    color: var(--neo-dark);
+    color: #FFFFFF;
     text-transform: uppercase;
-    text-shadow: 2.5px 2.5px 0px var(--neo-yellow);
+    text-shadow: 3px 3px 0px #000, 0 0 15px rgba(255, 209, 102, 0.7);
 }
 
 .subtitle {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #4B5563;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #F3F4F6;
+    text-shadow: 1px 1px 3px #000;
+    margin-top: 4px;
 }
 
 .menu-options {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .badge-pill {
@@ -328,29 +334,47 @@ input:checked + .switch-slider:before { transform: translateX(18px); }
 
 .menu-footer { font-size: 0.75rem; font-weight: 600; color: #6B7280; }
 
-/* --- PANTALLA 2: CREACIÓN DE PERSONAJE --- */
+/* --- PANTALLA 2: CREACIÓN DE PERSONAJE AMPLIADO (2 COLUMNAS) --- */
 #screen-character-creator {
-    justify-content: center;
-    align-items: center;
+    padding: 20px 24px;
     overflow-y: auto;
 }
 
 .creator-card {
     width: 100%;
-    max-width: 580px;
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 20px;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.creator-grid-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.creator-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 .screen-title h2 {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 900;
 }
 
-.screen-title p { font-size: 0.85rem; color: #4B5563; }
+.screen-title p { font-size: 0.9rem; color: #4B5563; }
 .input-with-button { display: flex; gap: 8px; }
 
 .radio-group-neo {
@@ -359,10 +383,26 @@ input:checked + .switch-slider:before { transform: translateX(18px); }
     gap: 8px;
 }
 
+.radio-grid-2-neo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
 .radio-grid-4-neo {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
+}
+
+.creator-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.creator-actions .btn {
+    flex: 1;
 }
 
 .radio-card-neo input { display: none; }
@@ -732,6 +772,11 @@ input:checked + .switch-slider:before { transform: translateX(18px); }
 
     .game-screen {
         padding: 8px 10px;
+    }
+
+    .creator-grid-body {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 
     .gameplay-dashboard-body {

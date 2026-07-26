@@ -15,7 +15,7 @@
     <div id="game-wrapper">
         <!-- PANTALLA 1: MENÚ PRINCIPAL -->
         <section id="screen-main-menu" class="game-screen active">
-            <div class="menu-card neo-card">
+            <div class="menu-card">
                 <div class="menu-header">
                     <div class="peru-flag-badge">🇵🇪 PERÚ</div>
                     <h1 class="main-title">PERÚ SIMULATOR</h1>
@@ -48,147 +48,155 @@
 
         <!-- PANTALLA 2: CREACIÓN DE PERSONAJE -->
         <section id="screen-character-creator" class="game-screen">
-            <div class="creator-card neo-card">
+            <div class="creator-card">
                 <div class="screen-title">
                     <h2>👶 CREA TU PERSONAJE</h2>
                     <p>Tu origen definirá tu destino y tus estadísticas iniciales en el Perú.</p>
                 </div>
 
                 <form id="creator-form" onsubmit="event.preventDefault();">
-                    <div class="form-group">
-                        <label for="char-name" class="neo-label">NOMBRE COMPLETO:</label>
-                        <div class="input-with-button">
-                            <input type="text" id="char-name" class="neo-input" placeholder="Ej. Brayan Quispe" maxlength="25" required>
-                            <button type="button" id="btn-random-name" class="btn btn-secondary">🎲 AZAR</button>
-                        </div>
-                    </div>
+                    <div class="creator-grid-body">
+                        <!-- Columna Izquierda: Identidad y Clase -->
+                        <div class="creator-col">
+                            <div class="form-group">
+                                <label for="char-name" class="neo-label">NOMBRE COMPLETO:</label>
+                                <div class="input-with-button">
+                                    <input type="text" id="char-name" class="neo-input" placeholder="Ej. Brayan Quispe" maxlength="25" required>
+                                    <button type="button" id="btn-random-name" class="btn btn-secondary">🎲 AZAR</button>
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <label class="neo-label">IDENTIDAD DE GÉNERO:</label>
-                        <div class="radio-group-neo">
-                            <label class="radio-card-neo">
-                                <input type="radio" name="char-gender" value="m" checked>
-                                <span class="radio-box">
-                                    <span class="emoji">👨</span>
-                                    <span class="label">Masculino</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo">
-                                <input type="radio" name="char-gender" value="f">
-                                <span class="radio-box">
-                                    <span class="emoji">👩</span>
-                                    <span class="label">Femenino</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo">
-                                <input type="radio" name="char-gender" value="nb">
-                                <span class="radio-box">
-                                    <span class="emoji">🚐</span>
-                                    <span class="label">Combi Voladora</span>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
+                            <div class="form-group">
+                                <label class="neo-label">IDENTIDAD DE GÉNERO:</label>
+                                <div class="radio-group-neo">
+                                    <label class="radio-card-neo">
+                                        <input type="radio" name="char-gender" value="m" checked>
+                                        <span class="radio-box">
+                                            <span class="emoji">👨</span>
+                                            <span class="label">Masculino</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo">
+                                        <input type="radio" name="char-gender" value="f">
+                                        <span class="radio-box">
+                                            <span class="emoji">👩</span>
+                                            <span class="label">Femenino</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo">
+                                        <input type="radio" name="char-gender" value="nb">
+                                        <span class="radio-box">
+                                            <span class="emoji">🚐</span>
+                                            <span class="label">Combi Voladora</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <label class="neo-label">LUGAR DE NACIMIENTO:</label>
-                        <div class="radio-grid-4-neo">
-                            <label class="radio-card-neo mini">
-                                <input type="radio" name="char-birthplace" value="lima" checked>
-                                <span class="radio-box">
-                                    <span class="emoji">🏙️</span>
-                                    <span class="label-title">Lima</span>
-                                    <span class="label-desc">S/. +1000, Estrés +10%</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo mini">
-                                <input type="radio" name="char-birthplace" value="costa">
-                                <span class="radio-box">
-                                    <span class="emoji">🌊</span>
-                                    <span class="label-title">Costa</span>
-                                    <span class="label-desc">Felicidad +10, Salud +5</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo mini">
-                                <input type="radio" name="char-birthplace" value="sierra">
-                                <span class="radio-box">
-                                    <span class="emoji">🏔️</span>
-                                    <span class="label-title">Sierra</span>
-                                    <span class="label-desc">Salud +15, Educación +5</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo mini">
-                                <input type="radio" name="char-birthplace" value="selva">
-                                <span class="radio-box">
-                                    <span class="emoji">🌴</span>
-                                    <span class="label-title">Selva</span>
-                                    <span class="label-desc">Felicidad +15, Suerte +10</span>
-                                </span>
-                            </label>
+                            <div class="form-group">
+                                <label class="neo-label">SITUACIÓN ECONÓMICA FAMILIAR:</label>
+                                <div class="radio-group-neo">
+                                    <label class="radio-card-neo">
+                                        <input type="radio" name="char-class" value="pobre" checked>
+                                        <span class="radio-box">
+                                            <span class="emoji">🪵</span>
+                                            <span class="label-title">Humilde</span>
+                                            <span class="label-desc">Suerte +15, Contactos 0</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo">
+                                        <input type="radio" name="char-class" value="media">
+                                        <span class="radio-box">
+                                            <span class="emoji">🏢</span>
+                                            <span class="label-title">Clase Media</span>
+                                            <span class="label-desc">S/. +20, Equilibrado</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo">
+                                        <input type="radio" name="char-class" value="rico">
+                                        <span class="radio-box">
+                                            <span class="emoji">💳</span>
+                                            <span class="label-title">Acomodada</span>
+                                            <span class="label-desc">S/. +100, Contactos +30</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="neo-label">SITUACIÓN ECONÓMICA FAMILIAR:</label>
-                        <div class="radio-group-neo">
-                            <label class="radio-card-neo">
-                                <input type="radio" name="char-class" value="pobre" checked>
-                                <span class="radio-box">
-                                    <span class="emoji">🪵</span>
-                                    <span class="label-title">Humilde</span>
-                                    <span class="label-desc">Suerte +15, Contactos 0</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo">
-                                <input type="radio" name="char-class" value="media">
-                                <span class="radio-box">
-                                    <span class="emoji">🏢</span>
-                                    <span class="label-title">Clase Media</span>
-                                    <span class="label-desc">S/. +200, Equilibrado</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo">
-                                <input type="radio" name="char-class" value="rico">
-                                <span class="radio-box">
-                                    <span class="emoji">💳</span>
-                                    <span class="label-title">Acomodada</span>
-                                    <span class="label-desc">S/. +5000, Contactos +30</span>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
+                        <!-- Columna Derecha: Región y Dinámica Familiar -->
+                        <div class="creator-col">
+                            <div class="form-group">
+                                <label class="neo-label">LUGAR DE NACIMIENTO:</label>
+                                <div class="radio-grid-2-neo">
+                                    <label class="radio-card-neo mini">
+                                        <input type="radio" name="char-birthplace" value="lima" checked>
+                                        <span class="radio-box">
+                                            <span class="emoji">🏙️</span>
+                                            <span class="label-title">Lima</span>
+                                            <span class="label-desc">Suerte +5, Estrés +10%</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo mini">
+                                        <input type="radio" name="char-birthplace" value="costa">
+                                        <span class="radio-box">
+                                            <span class="emoji">🌊</span>
+                                            <span class="label-title">Costa</span>
+                                            <span class="label-desc">Felicidad +10, Salud +5</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo mini">
+                                        <input type="radio" name="char-birthplace" value="sierra">
+                                        <span class="radio-box">
+                                            <span class="emoji">🏔️</span>
+                                            <span class="label-title">Sierra</span>
+                                            <span class="label-desc">Salud +15, Educación +5</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo mini">
+                                        <input type="radio" name="char-birthplace" value="selva">
+                                        <span class="radio-box">
+                                            <span class="emoji">🌴</span>
+                                            <span class="label-title">Selva</span>
+                                            <span class="label-desc">Felicidad +15, Suerte +10</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <label class="neo-label">DINÁMICA FAMILIAR:</label>
-                        <div class="radio-grid-4-neo">
-                            <label class="radio-card-neo mini">
-                                <input type="radio" name="char-family" value="estricta" checked>
-                                <span class="radio-box">
-                                    <span class="label-title">Estricta</span>
-                                    <span class="label-desc">Educación +10</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo mini">
-                                <input type="radio" name="char-family" value="normal">
-                                <span class="radio-box">
-                                    <span class="label-title">Normal</span>
-                                    <span class="label-desc">Equilibrada</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo mini">
-                                <input type="radio" name="char-family" value="relajada">
-                                <span class="radio-box">
-                                    <span class="label-title">Relajada</span>
-                                    <span class="label-desc">Felicidad +10</span>
-                                </span>
-                            </label>
-                            <label class="radio-card-neo mini">
-                                <input type="radio" name="char-family" value="caotica">
-                                <span class="radio-box">
-                                    <span class="label-title">Caótica</span>
-                                    <span class="label-desc">Estrés +10, Suerte +5</span>
-                                </span>
-                            </label>
+                            <div class="form-group">
+                                <label class="neo-label">DINÁMICA FAMILIAR:</label>
+                                <div class="radio-grid-2-neo">
+                                    <label class="radio-card-neo mini">
+                                        <input type="radio" name="char-family" value="estricta" checked>
+                                        <span class="radio-box">
+                                            <span class="label-title">Estricta</span>
+                                            <span class="label-desc">Educación +10</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo mini">
+                                        <input type="radio" name="char-family" value="normal">
+                                        <span class="radio-box">
+                                            <span class="label-title">Normal</span>
+                                            <span class="label-desc">Equilibrada</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo mini">
+                                        <input type="radio" name="char-family" value="relajada">
+                                        <span class="radio-box">
+                                            <span class="label-title">Relajada</span>
+                                            <span class="label-desc">Felicidad +10</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-card-neo mini">
+                                        <input type="radio" name="char-family" value="caotica">
+                                        <span class="radio-box">
+                                            <span class="label-title">Caótica</span>
+                                            <span class="label-desc">Estrés +10, Suerte +5</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
